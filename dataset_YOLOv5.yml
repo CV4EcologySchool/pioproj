@@ -6,4 +6,4 @@ val: ../val/images/
 nc: 2
 
 # class names
-names: ['piosphere', 'tank']
+names: ['tank','piosphere']
