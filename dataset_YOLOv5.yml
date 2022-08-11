@@ -1,6 +1,6 @@
 # train and val data as 1) directory: path/images/, 2) file: path/images.txt, or 3) list: [path1/images/, path2/images/]
-train: ../train/images/
-val: ../val/images/
+train: ../datadrive/dataset_YOLOv5/train/images
+val: ../datadrive/dataset_YOLOv5/val/images
 
 # number of classes
 nc: 2
