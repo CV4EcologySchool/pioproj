@@ -1,0 +1,5 @@
+# Record of training command line arguments
+
+
+# pioproj/vanilla
+python3 train.py --img 266 --batch 16 --epochs 10 --data ../pioproj/dataset_YOLOv5.yaml --weights yolov51.pt --project pioproj --name vanilla --save-period 10 --hyp ../pioproj/hyp_vanilla.yaml
