@@ -2,4 +2,9 @@
 
 
 # pioproj/vanilla
-python3 train.py --img 266 --batch 16 --epochs 10 --data ../pioproj/dataset_YOLOv5.yaml --weights yolov51.pt --project pioproj --name vanilla --save-period 10 --hyp ../pioproj/hyp_vanilla.yaml
+python3 train.py --img 266 --batch 16 --epochs 1000 --data /home/ubuntu/pioproj/dataset_YOLOv5.yml --weights yolov5l.pt --project pioproj --name vanilla --save-period 10 --hyp /home/ubuntu/pioproj/hyp_vanilla.yaml
+
+# pioproj/vanilla_long (disable EarlyStopping to see what model gives over long run '--patience 0')
+# Note: also corrected image size to 256 (instead of 266, lol)
+# Upped batch size since memory is available (no prob)
+python3 train.py --img 256 --batch 32 --epochs 1000 --data /home/ubuntu/pioproj/dataset_YOLOv5.yml --weights yolov5l.pt --project pioproj --name vanilla_long --save-period 10 --hyp /home/ubuntu/pioproj/hyp_vanilla.yaml --patience 0
