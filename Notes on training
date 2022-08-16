@@ -1,26 +1,63 @@
-# Record of training command line arguments
+# Record of training command line arguments --need to start over 8/15/2022, lol
 
-
+#################################### OBSOLETE
 # pioproj/vanilla
 python3 train.py --img 266 --batch 16 --epochs 1000 --data /home/ubuntu/pioproj/dataset_YOLOv5.yml --weights yolov5l.pt --project pioproj --name vanilla --save-period 10 --hyp /home/ubuntu/pioproj/hyp_vanilla.yaml
 
 # pioproj/vanilla_long (disable EarlyStopping to see what model gives over long run '--patience 0')
 # Note: also corrected image size to 256 (instead of 266, lol)
 # ***Did not run due to low memory on VM***
-python3 train.py --img 256 --batch 16 --epochs 1000 --data /home/ubuntu/pioproj/dataset_YOLOv5.yml --weights yolov5l.pt --project pioproj --name vanilla_long_fullrun --save-period 10 --hyp /home/ubuntu/pioproj/hyp_vanilla.yaml --patience 0
+python3 train.py --img 256 --batch 16 --epochs 1000 --data /home/ubuntu/pioproj/dataset_YOLOv5.yml --weights yolov5l.pt --project pioproj --name vanilla_long --save-period 10 --hyp /home/ubuntu/pioproj/hyp_vanilla.yaml --patience 0
 
 # ************Decided to separate tanks and piospheres**************
+
+####################################TANKS
 
 # Run vanilla_long on TANKS only
 # Up save period to 50 (since this is going to be a long run)
 python3 train.py --img 256 --batch 16 --epochs 1000 --data /home/ubuntu/pioproj/tanks_YOLOv5.yml --weights yolov5l.pt --project pioproj --name tanks_van_long --save-period 50 --hyp /home/ubuntu/pioproj/hyp_vanilla.yaml --patience 0
+# Repeat long run with epoch = 216 to match previous stop point
+python3 train.py --img 256 --batch 16 --epochs 216 --data /home/ubuntu/pioproj/tanks_YOLOv5.yml --weights yolov5l.pt --project pioproj --name tanks_van_long_rep2 --save-period 50 --hyp /home/ubuntu/pioproj/hyp_vanilla.yaml --patience 0
 
 # Run vanilla_short on TANKS only x 3 (--name tanks_van_short_v2, tanks_van_short_v3)
 python3 train.py --img 256 --batch 16 --epochs 100 --data /home/ubuntu/pioproj/tanks_YOLOv5.yml --weights yolov5l.pt --project pioproj --name tanks_van_short --save-period 50 --hyp /home/ubuntu/pioproj/hyp_vanilla.yaml --patience 0
 
+# Add back in basic YOLOv5 augmentations and run 3 times to confirm stability
+python3 train.py --img 256 --batch 16 --epochs 216 --data /home/ubuntu/pioproj/tanks_YOLOv5.yml --weights yolov5l.pt --project pioproj --name tanks_van_long_aug1 --save-period 50 --hyp /home/ubuntu/pioproj/hyp_tank_aug_v1.yaml --patience 0
+
+#####################################PIOSPHERES
 
 # Run vanilla_long on PIOSPHERES only
 # Up save pd to 50 (since this is going to be a long run)
 python3 train.py --img 256 --batch 16 --epochs 1000 --data /home/ubuntu/pioproj/piospheres_YOLOv5.yml --weights yolov5l.pt --project pioproj --name piospheres_van_long --save-period 50 --hyp /home/ubuntu/pioproj/hyp_vanilla.yaml --patience 0
 
-# TODO: Adapt classifier code and run for PIOSPHERES
+###################################################################################################
+
+################################################## RESTART 8/15/2022
+# pioproj/vanilla
+python3 train.py --img 256 --batch 16 --epochs 100 --data /home/ubuntu/pioproj/dataset_YOLOv5.yml --weights yolov5l.pt --project pioproj2 --name vanilla --save-period 10 --hyp /home/ubuntu/pioproj/hyp_vanilla.yaml --patience 0
+
+# pioproj/vanilla_long (disable EarlyStopping to see what model gives over long run '--patience 0')
+# Note: also corrected image size to 256 (instead of 266, lol)
+# ***Did not run due to low memory on VM***
+python3 train.py --img 256 --batch 16 --epochs 100 --data /home/ubuntu/pioproj/dataset_YOLOv5.yml --weights yolov5l.pt --project pioproj2 --name vanilla_long --save-period 10 --hyp /home/ubuntu/pioproj/hyp_vanilla.yaml --patience 0
+
+# ************Decided to separate tanks and piospheres**************
+
+####################################TANKS
+
+# Run vanilla_long on TANKS only
+# Up save period to 50 (since this is going to be a long run)
+python3 train.py --img 256 --batch 16 --epochs 1000 --data /home/ubuntu/pioproj/tanks_YOLOv5.yml --weights yolov5l.pt --project pioproj2 --name tanks_van_long --save-period 50 --hyp /home/ubuntu/pioproj/hyp_vanilla.yaml --patience 0
+
+# Run vanilla_short on TANKS only x 3 (--name tanks_van_short_v2, tanks_van_short_v3)
+python3 train.py --img 256 --batch 16 --epochs 100 --data /home/ubuntu/pioproj/tanks_YOLOv5.yml --weights yolov5l.pt --project pioproj2 --name tanks_van_short --save-period 50 --hyp /home/ubuntu/pioproj/hyp_vanilla.yaml --patience 0
+
+# Add back in basic YOLOv5 augmentations and run 3 times to confirm stability
+python3 train.py --img 256 --batch 16 --epochs 216 --data /home/ubuntu/pioproj/tanks_YOLOv5.yml --weights yolov5l.pt --project pioproj2 --name tanks_van_long_aug1 --save-period 50 --hyp /home/ubuntu/pioproj/hyp_tank_aug_v1.yaml --patience 0
+
+#####################################PIOSPHERES
+
+# Run vanilla_long on PIOSPHERES only
+# Up save pd to 50 (since this is going to be a long run)
+python3 train.py --img 256 --batch 16 --epochs 1000 --data /home/ubuntu/pioproj/piospheres_YOLOv5.yml --weights yolov5l.pt --project pioproj --name piospheres_van_long --save-period 50 --hyp /home/ubuntu/pioproj/hyp_vanilla.yaml --patience 0
