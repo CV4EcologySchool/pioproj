@@ -1,6 +1,7 @@
 # Adjusted (from vanilla) hyperparameters for added-augmentation training of water tank detection
 # Increased from YOLOv5 hyperparameters for low-augmentatoin COCO training from scratch
-# Added mosaicing, 0.3 prob that value will be augmented, , 0.2 prob that copy_paste will be implimented
+# Added 0.3 prob that value will be augmented, 0.2 prob that copy_paste will be implimented, 
+# 0.2 that mixup is implemented (can help wit "corrupt" labels--whatever that is)
 
 lr0: 0.01  # initial learning rate (SGD=1E-2, Adam=1E-3)
 lrf: 0.01  # final OneCycleLR learning rate (lr0 * lrf)
@@ -28,6 +29,6 @@ shear: 0.0  # image shear (+/- deg)
 perspective: 0.0  # image perspective (+/- fraction), range 0-0.001
 flipud: 0.5 # image flip up-down (probability)
 fliplr: 0.5  # image flip left-right (probability)
-mosaic: 1.0  # image mosaic (probability)
-mixup: 0.0  # image mixup (probability)
+mosaic: 0.0  # image mosaic (probability)
+mixup: 0.2  # image mixup (probability)
 copy_paste: 0.2  # segment copy-paste (probability)

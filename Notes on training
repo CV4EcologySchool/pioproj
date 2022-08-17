@@ -34,30 +34,45 @@ python3 train.py --img 256 --batch 16 --epochs 1000 --data /home/ubuntu/pioproj/
 ###################################################################################################
 
 ################################################## RESTART 8/15/2022
-# pioproj/vanilla
+# pioproj2/vanilla
 python3 train.py --img 256 --batch 16 --epochs 100 --data /home/ubuntu/pioproj/dataset_YOLOv5.yml --weights yolov5l.pt --project pioproj2 --name vanilla --save-period 10 --hyp /home/ubuntu/pioproj/hyp_vanilla.yaml --patience 0
 
-# pioproj/vanilla_long (disable EarlyStopping to see what model gives over long run '--patience 0')
-# Note: also corrected image size to 256 (instead of 266, lol)
-# ***Did not run due to low memory on VM***
-python3 train.py --img 256 --batch 16 --epochs 100 --data /home/ubuntu/pioproj/dataset_YOLOv5.yml --weights yolov5l.pt --project pioproj2 --name vanilla_long --save-period 10 --hyp /home/ubuntu/pioproj/hyp_vanilla.yaml --patience 0
+# This set up is gentler for iou and will allow to asses P-R across range of confidences
+python3 detect.py --weights pioproj2/vanilla/weights/last.pt --img 256 --conf-thres 0.01 --iou-thres 0.2 --nosave --save-conf --save-txt --source /datadrive_vol/dataset_YOLOv5/val/images --project pioproj2/detect_val --name vanilla --exist-ok
 
-# ************Decided to separate tanks and piospheres**************
+# Note: copy script (get into results directory, first)
+#scp -i ../cv4eNewKey.pem -r ubuntu@35.89.131.69:/home/ubuntu/yolov5/pioproj2/detect_train .
+
+#************Decided to separate tanks and piospheres**************
 
 ####################################TANKS
 
-# Run vanilla_long on TANKS only
-# Up save period to 50 (since this is going to be a long run)
-python3 train.py --img 256 --batch 16 --epochs 1000 --data /home/ubuntu/pioproj/tanks_YOLOv5.yml --weights yolov5l.pt --project pioproj2 --name tanks_van_long --save-period 50 --hyp /home/ubuntu/pioproj/hyp_vanilla.yaml --patience 0
+# Run vanilla on TANKS only
+python3 train.py --img 256 --batch 16 --epochs 100 --data /home/ubuntu/pioproj/tanks_YOLOv5.yml --weights yolov5l.pt --project pioproj2 --name tanks_vanilla --save-period 10 --hyp /home/ubuntu/pioproj/hyp_vanilla.yaml --patience 0
 
-# Run vanilla_short on TANKS only x 3 (--name tanks_van_short_v2, tanks_van_short_v3)
-python3 train.py --img 256 --batch 16 --epochs 100 --data /home/ubuntu/pioproj/tanks_YOLOv5.yml --weights yolov5l.pt --project pioproj2 --name tanks_van_short --save-period 50 --hyp /home/ubuntu/pioproj/hyp_vanilla.yaml --patience 0
+# Make predictions
+python3 detect.py --weights pioproj2/tanks_vanilla/weights/last.pt --img 256 --conf-thres 0.01 --iou-thres 0.2 --nosave --save-conf --save-txt --source /datadrive_vol/dataset_YOLOv5/val/images --project pioproj2/detect_val --name tanks_vanilla --exist-ok
 
-# Add back in basic YOLOv5 augmentations and run 3 times to confirm stability
-python3 train.py --img 256 --batch 16 --epochs 216 --data /home/ubuntu/pioproj/tanks_YOLOv5.yml --weights yolov5l.pt --project pioproj2 --name tanks_van_long_aug1 --save-period 50 --hyp /home/ubuntu/pioproj/hyp_tank_aug_v1.yaml --patience 0
+
+# Add in some augmentations
+python3 train.py --img 256 --batch 16 --epochs 100 --data /home/ubuntu/pioproj/tanks_YOLOv5.yml --weights yolov5l.pt --project pioproj2 --name tanks_aug_v1 --save-period 10 --hyp /home/ubuntu/pioproj/hyp_tank_aug_v1.yaml --patience 0
+
+# Make predictions
+python3 detect.py --weights pioproj2/tanks_vanilla/weights/last.pt --img 256 --conf-thres 0.01 --iou-thres 0.2 --nosave --save-conf --save-txt --source /datadrive_vol/dataset_YOLOv5/val/images --project pioproj2/detect_val --name tanks_aug_v1 --exist-ok
+
 
 #####################################PIOSPHERES
 
-# Run vanilla_long on PIOSPHERES only
-# Up save pd to 50 (since this is going to be a long run)
-python3 train.py --img 256 --batch 16 --epochs 1000 --data /home/ubuntu/pioproj/piospheres_YOLOv5.yml --weights yolov5l.pt --project pioproj --name piospheres_van_long --save-period 50 --hyp /home/ubuntu/pioproj/hyp_vanilla.yaml --patience 0
+# Run vanilla on PIOSPHERES only
+python3 train.py --img 256 --batch 16 --epochs 100 --data /home/ubuntu/pioproj/piospheres_YOLOv5.yml --weights yolov5l.pt --project pioproj2 --name piospheres_vanilla --save-period 10 --hyp /home/ubuntu/pioproj/hyp_vanilla.yaml --patience 0
+
+# Make predictions
+python3 detect.py --weights pioproj2/piospheres_vanilla/weights/last.pt --img 256 --conf-thres 0.01 --iou-thres 0.2 --nosave --save-conf --save-txt --source /datadrive_vol/dataset_YOLOv5/val/images --project pioproj2/detect_val --name piospheres_vanilla --exist-ok
+
+# Add in some augmentations
+python3 train.py --img 256 --batch 16 --epochs 100 --data /home/ubuntu/pioproj/piospheres_YOLOv5.yml --weights yolov5l.pt --project pioproj2 --name piospheres_aug_v1 --save-period 10 --hyp /home/ubuntu/pioproj/hyp_piosphere_aug_v1.yaml --patience 0
+
+# Make predictions
+python3 detect.py --weights pioproj2/tanks_vanilla/weights/last.pt --img 256 --conf-thres 0.01 --iou-thres 0.2 --nosave --save-conf --save-txt --source /datadrive_vol/dataset_YOLOv5/val/images --project pioproj2/detect_val --name piospheres_aug_v1 --exist-ok
+
+
